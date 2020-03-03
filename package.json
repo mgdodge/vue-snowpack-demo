@@ -5,19 +5,36 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+
+    "prepare": "npm run convert && snowpack --include 'lib/**/*.js'",
+    "convert": "cross-env NODE_ENV=production rollup",
+    "watch:convert": "npm run convert -- --watch",
+    "dev": "npm-run-all -p serve watch:convert",
+    "build": "npm run convert && snowpack --clean --optimize --include 'lib/**/*.js'"
   },
   "dependencies": {
     "core-js": "^3.6.4",
-    "vue": "^2.6.11"
+    "es-module-shims": "^0.4.6",
+    "the-ultimate-question": "^1.3.0",
+    "vue": "^2.6.11",
+    "vue-runtime-helpers": "^1.1.2"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^4.2.0",
     "@vue/cli-plugin-eslint": "^4.2.0",
     "@vue/cli-service": "^4.2.0",
     "babel-eslint": "^10.0.3",
+    "cross-env": "^7.0.0",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^6.1.2",
+    "npm-run-all": "^4.1.5",
+    "rollup": "^1.31.1",
+    "rollup-plugin-babel": "^4.3.3",
+    "rollup-plugin-cleaner": "^1.0.0",
+    "rollup-plugin-multi-input": "^1.0.3",
+    "rollup-plugin-vue": "^5.1.6",
+    "snowpack": "^1.5.0",
     "vue-template-compiler": "^2.6.11"
   },
   "eslintConfig": {
@@ -37,5 +54,13 @@
   "browserslist": [
     "> 1%",
     "last 2 versions"
-  ]
+  ],
+  "snowpack": {
+    "webDependencies": [
+      "es-module-shims"
+    ],
+    "installOptions": {
+      "hash": true
+    }
+  }
 }
