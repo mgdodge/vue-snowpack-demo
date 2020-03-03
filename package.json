@@ -4,14 +4,12 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
+    "build": "npm run convert && snowpack --clean --optimize --include 'lib/**/*.js'",
     "lint": "vue-cli-service lint",
-
     "prepare": "npm run convert && snowpack --include 'lib/**/*.js'",
-    "convert": "cross-env NODE_ENV=production rollup",
+    "convert": "cross-env NODE_ENV=production rollup --config=rollup.config.js",
     "watch:convert": "npm run convert -- --watch",
-    "dev": "npm-run-all -p serve watch:convert",
-    "build": "npm run convert && snowpack --clean --optimize --include 'lib/**/*.js'"
+    "dev": "npm-run-all -p serve watch:convert"
   },
   "dependencies": {
     "core-js": "^3.6.4",
